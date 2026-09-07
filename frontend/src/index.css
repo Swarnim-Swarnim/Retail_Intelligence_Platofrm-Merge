@@ -1,0 +1,283 @@
+@import "tailwindcss";
+@import "./styles/tokens.css";
+
+/* ============================================================================
+   Tailwind theme — every value below POINTS AT a token above via var(),
+   it never restates one. Change a color once, in tokens.css, and both the
+   raw CSS and every Tailwind utility (bg-violet, text-ink-muted, …) update
+   together.
+
+   Shadows, easing and the three layout dimensions (sidebar/topbar/rail
+   widths) are deliberately NOT registered here — tokens.css already named
+   them --shadow-{x} and --ease-{x}, which are reserved Tailwind namespaces,
+   so aliasing them here would be self-referential (--shadow-md: var(--shadow-md)
+   resolves to nothing). Use them directly: shadow-[var(--shadow-md)],
+   ease-[var(--ease-spring)], w-[var(--sidebar-w)].
+============================================================================ */
+@theme {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Brand — kept as brand-* (not violet/blue/indigo) because those bare
+     names collide with Tailwind's own built-in color palette, which
+     silently blocks the bare bg-{name} utility from being generated. */
+  --color-brand-violet: var(--brand-violet);
+  --color-brand-violet-50: var(--brand-violet-50);
+  --color-brand-violet-100: var(--brand-violet-100);
+  --color-brand-violet-600: var(--brand-violet-600);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-blue-50: var(--brand-blue-50);
+  --color-brand-indigo: var(--brand-indigo);
+
+  /* Surfaces */
+  --color-surface-page: var(--surface-page);
+  --color-surface-card: var(--surface-card);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-elevated: var(--surface-elevated);
+
+  /* Sidebar */
+  --color-sidebar-bg: var(--sidebar-bg);
+  --color-sidebar-item: var(--sidebar-item);
+  --color-sidebar-item-hover: var(--sidebar-item-hover);
+  --color-sidebar-item-active: var(--sidebar-item-active);
+  --color-sidebar-item-active-bg: var(--sidebar-item-active-bg);
+  --color-sidebar-brand: var(--sidebar-brand);
+  --color-sidebar-brand-sub: var(--sidebar-brand-sub);
+
+  /* Text */
+  --color-ink-primary: var(--text-primary);
+  --color-ink-secondary: var(--text-secondary);
+  --color-ink-muted: var(--text-muted);
+  --color-ink-disabled: var(--text-disabled);
+  --color-ink-inverse: var(--text-inverse);
+
+  /* Borders */
+  --color-border-subtle: var(--border-subtle);
+  --color-border-default: var(--border-default);
+  --color-border-strong: var(--border-strong);
+
+  /* Status */
+  --color-status-success: var(--status-success);
+  --color-status-success-bg: var(--status-success-bg);
+  --color-status-warning: var(--status-warning);
+  --color-status-warning-bg: var(--status-warning-bg);
+  --color-status-danger: var(--status-danger);
+  --color-status-danger-bg: var(--status-danger-bg);
+  --color-status-info: var(--status-info);
+  --color-status-info-bg: var(--status-info-bg);
+
+  /* Tone */
+  --color-tone-peach: var(--tone-peach);
+  --color-tone-peach-bg: var(--tone-peach-bg);
+
+  /* KPI icon tints */
+  --color-tint-mint: var(--tint-mint);
+  --color-tint-mint-icon: var(--tint-mint-icon);
+  --color-tint-peach: var(--tint-peach);
+  --color-tint-peach-icon: var(--tint-peach-icon);
+  --color-tint-lavender: var(--tint-lavender);
+  --color-tint-lavender-icon: var(--tint-lavender-icon);
+  --color-tint-rose: var(--tint-rose);
+  --color-tint-rose-icon: var(--tint-rose-icon);
+  --color-tint-sky: var(--tint-sky);
+  --color-tint-sky-icon: var(--tint-sky-icon);
+  --color-tint-lemon: var(--tint-lemon);
+  --color-tint-lemon-icon: var(--tint-lemon-icon);
+  --color-tint-teal: var(--tint-teal);
+  --color-tint-teal-icon: var(--tint-teal-icon);
+  --color-tint-coral: var(--tint-coral);
+  --color-tint-coral-icon: var(--tint-coral-icon);
+
+  /* Dark (Engine view legacy) */
+  --color-dark-bg: var(--dark-bg);
+  --color-dark-bg-2: var(--dark-bg-2);
+  --color-dark-card: var(--dark-card);
+  --color-dark-card-hover: var(--dark-card-hover);
+  --color-dark-border: var(--dark-border);
+  --color-dark-border-strong: var(--dark-border-strong);
+  --color-dark-text: var(--dark-text);
+  --color-dark-text-muted: var(--dark-text-muted);
+  --color-dark-text-dim: var(--dark-text-dim);
+
+  /* Radius */
+  --radius-xs: var(--r-xs);
+  --radius-sm: var(--r-sm);
+  --radius-md: var(--r-md);
+  --radius-lg: var(--r-lg);
+  --radius-xl: var(--r-xl);
+  --radius-2xl: var(--r-2xl);
+  --radius-pill: var(--r-pill);
+}
+
+/* ============================================================================
+   Global base — the handful of rules the Tailwind preflight intentionally
+   does not set (it zeroes heading styles, does not touch scrollbars/selection,
+   etc). Ported from base.css; everything preflight already covers (box-sizing,
+   margin resets) was dropped rather than duplicated.
+============================================================================ */
+body {
+  color: var(--text-primary);
+  background: var(--surface-page);
+  font-feature-settings: 'cv02', 'cv03', 'cv11', 'tnum';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 { font-weight: 700; color: var(--text-primary); letter-spacing: -0.01em; }
+h1 { font-size: 28px; line-height: 1.25; letter-spacing: -0.02em; }
+h2 { font-size: 22px; line-height: 1.3; }
+h3 { font-size: 18px; line-height: 1.35; }
+h4 { font-size: 15px; line-height: 1.4; }
+
+::selection { background: var(--brand-violet); color: white; }
+
+.num { font-variant-numeric: tabular-nums; font-feature-settings: 'tnum'; }
+
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: #D7DAE2; border-radius: 5px; border: 2px solid var(--surface-page); }
+*::-webkit-scrollbar-thumb:hover { background: #B8BDC9; }
+
+:focus-visible { outline: 2px solid var(--brand-violet); outline-offset: 2px; border-radius: 4px; }
+
+@keyframes fadeIn   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulseDot { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.4); opacity: 0.6; } }
+@keyframes spin     { to { transform: rotate(360deg); } }
+@keyframes shimmer  { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes drawLine { to { stroke-dashoffset: 0; } }
+@keyframes liveDot {
+  0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.55); }
+  70%  { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+@keyframes npGrow { from { width: 0; } }
+@keyframes aiPulseDot {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15); }
+  50%      { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.05); }
+}
+@keyframes aiCursorBlink { to { opacity: 0; } }
+
+.fade-in    { animation: fadeIn 220ms var(--ease-out) both; }
+.fade-in-up { animation: fadeInUp 320ms var(--ease-out) both; }
+
+/* ---------------------------------------------------------------------------
+   THE ALERT BELL — a physical ring, while the current scope holds risk alerts.
+
+   The bell IS the indicator. No dot, no badge, no count, no ring of light: it
+   swings the way a hung bell swings when something strikes it, then stops.
+
+   IT PIVOTS FROM THE HANGER, NOT THE CENTRE. That single detail is what makes
+   it read as a bell rather than as an icon being rotated. The crown of this
+   icon sits at (12, 2) in its 24-unit viewBox — the path arcs from (6,8) up
+   over a radius-6 curve — so the origin is 50% across and 8.33% down, and both
+   the body and the clapper turn about that same point.
+
+   THE SWING IS DAMPED. Amplitudes decay 8 -> 8 -> 6 -> 5 -> 3 -> 2 -> 0 degrees
+   over 600ms, alternating sides, easing through each extreme. It is a decaying
+   oscillation rather than a symmetric shake, which is why it settles instead of
+   simply stopping.
+
+   NO SEPARATE CLAPPER MOTION, and that was a decision made by looking. This
+   icon's clapper is a 4px arc; counter-rotating it about the same pivot read as
+   the clapper DETACHING from the bell's mouth under magnification, and at the
+   18px it actually renders at the differential is sub-pixel anyway. The bell
+   swings as one piece, which is what a bell this size looks like.
+
+   IT RINGS ONCE EVERY 5 SECONDS. 600ms of motion, 4.4s of stillness: a
+   reminder, not a permanently animated icon.
+
+   TRANSFORM ONLY, so the header cannot reflow, and the icon never leaves the
+   38px button it sits in. */
+@keyframes bellSwing {
+  0%,   12%, 100% { transform: rotate(0deg); }
+  1.6%            { transform: rotate(-12deg); }
+  3.2%            { transform: rotate(10deg); }
+  4.8%            { transform: rotate(-7deg); }
+  6.4%            { transform: rotate(5deg); }
+  8%              { transform: rotate(-3deg); }
+  10%             { transform: rotate(1.5deg); }
+}
+
+.bell-ring svg {
+  transform-origin: 50% 8.33%;
+  animation: bellSwing 5s var(--ease-in-out) infinite;
+}
+
+/* PANEL OPEN — the ring holds. The user is reading the alerts; the thing that
+   pointed at them has done its job. `paused` rather than `none` so it resumes
+   mid-cycle instead of snapping back to the start. */
+.bell-wrap-open .bell-ring svg { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in, .fade-in-up { animation: none; }
+
+  /* No swing at all. But a sighted reader would then have NOTHING to see, so
+     the state moves from motion into colour: the bell takes the brand accent
+     instead of the neutral header grey. Not red, not a dot, not a badge, and
+     nothing flashes — it is simply a bell that is lit while alerts exist. */
+  .bell-ring svg { animation: none; }
+  /* `.bell-ring svg` (0,1,1), not `.bell-ring` (0,1,0): the button already
+     carries Tailwind's own `text-ink-secondary`, and at equal specificity that
+     wins on source order — which left the indication invisible. Setting the
+     stroke on the icon itself also beats its `stroke="currentColor"` attribute,
+     since any rule outranks a presentation attribute. */
+  .bell-ring svg { stroke: var(--brand-violet); }
+}
+
+/* ============================================================================
+   Command Center — filter motion and ambient lighting
+   Added for the UI polish pass. Presentation only; no component reads these
+   to decide anything. Every animation is short (150-250ms) and every one is
+   disabled under prefers-reduced-motion below.
+   ========================================================================= */
+
+@keyframes ddEnter    { from { opacity: 0; transform: translateY(-4px) scale(0.985); }
+                        to   { opacity: 1; transform: translateY(0)    scale(1); } }
+@keyframes chipEnter  { from { opacity: 0; transform: scale(0.85); }
+                        to   { opacity: 1; transform: scale(1); } }
+@keyframes panelEnter { from { opacity: 0; transform: translateY(-6px); }
+                        to   { opacity: 1; transform: translateY(0); } }
+
+/* Dropdown / popover surfaces. */
+.dd-enter    { animation: ddEnter 160ms var(--ease-out) both; transform-origin: top center; }
+/* A selection chip appearing in the filter bar. */
+.chip-enter  { animation: chipEnter 150ms var(--ease-out) both; }
+/* The More Filters panel. Height is not animated — animating to a measured
+   height fights the auto-fill grid inside and janks on resize; opacity plus a
+   small rise reads as an expansion without that cost. */
+.panel-enter { animation: panelEnter 200ms var(--ease-out) both; }
+
+/* Ambient lighting: two very low-alpha radial washes behind the page content,
+   echoing the previous Command Center's "lights" without neon. Purely
+   decorative, so it is aria-hidden at the markup level and sits behind
+   everything via a negative z-index.
+
+   The right edge is pinned to 0, not -5%: this box's containing block is the
+   initial containing block (no positioned ancestor), so a negative `right`
+   pushed it 5% of the viewport past the right edge and that overhang WAS the
+   page's only source of horizontal scroll, at every breakpoint. A negative
+   `left` costs nothing — overflow to the left of the origin is not scrollable
+   in LTR — so the wash keeps its left bleed. */
+.cc-ambient {
+  position: absolute;
+  inset: -10% 0 auto -5%;
+  height: 420px;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 120% at 18% 0%,  color-mix(in srgb, var(--brand-violet) 9%, transparent) 0%, transparent 62%),
+    radial-gradient(46% 100% at 82% 6%, color-mix(in srgb, var(--brand-blue)   7%, transparent) 0%, transparent 60%);
+}
+
+/* A restrained top-edge highlight on the filter bar, so it reads as a raised
+   surface rather than a flat strip. */
+.cc-filter-surface {
+  background: linear-gradient(180deg,
+              color-mix(in srgb, var(--surface-card) 100%, transparent) 0%,
+              color-mix(in srgb, var(--surface-card) 96%, transparent) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dd-enter, .chip-enter, .panel-enter { animation: none; }
+}

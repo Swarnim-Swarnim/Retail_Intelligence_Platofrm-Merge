@@ -1,0 +1,17 @@
+{
+  "profile": {
+    "region": "South",
+    "timezone": "Asia/Kolkata"
+  },
+  "preferences": {
+    "theme": "Light",
+    "density": "Comfortable",
+    "defaultPeriod": "Q2 FY25",
+    "defaultChannel": "All Channels"
+  },
+  "integrations": [
+    "Single sign-on",
+    "Slack notifications",
+    "Email digests"
+  ]
+}
